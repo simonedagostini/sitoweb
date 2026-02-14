@@ -82,6 +82,31 @@ iframe {
     background: linear-gradient(135deg, #ff758c, #ff7eb3);
 }
 
+.romantic-img {
+    width: 250px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.romantic-img:hover {
+    transform: scale(1.05);
+}
+
+.romantic-video {
+    display: block;
+    margin: 30px auto;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+
+
+
 
 </style>
 </head>
@@ -90,17 +115,29 @@ iframe {
 
 <!-- PAGINA 1 -->
 <div class="section active" id="page1">
-    <h1>Buon San Valentino Eleonora ❤️</h1>
+    <h1>Eiiiii</h1>
     <p>
-        Questa piccola sorpresa è per te.  
-        Per ricordarci dove siamo stati…  
-        e sognare insieme dove andremo.
+        Ciao Elonoraaaaa
     </p>
-    <button onclick="nextPage(2)">Scopri di più ✨</button>
+
+    <h1>❤️</h1>
+    <button onclick="nextPage(2)">❤️  Cosa ci sarà qui?  ❤️</button>
+</div>
+
+
+
+<!-- PAGINA 1 -->
+<div class="section active" id="page2">
+    <h1>Buon San Valentino ❤️</h1>
+    <p>
+        Anche se non siamo insieme è come se lo fossimo,
+        perchè comunque sei sempre nel mio ❤️
+    </p>
+    <button onclick="nextPage(3)">E cosa devi dirmi ancora? ✨</button>
 </div>
 
 <!-- PAGINA 2 -->
-<div class="section" id="page2">
+<div class="section" id="page3">
     <h1>Per Noi 💕</h1>
     <p>
         Con te ogni posto diventa casa.  
@@ -112,23 +149,59 @@ iframe {
         il mio futuro.
         <br><br>
         E questa è solo la mappa dell’inizio.
+        <br><br>
+        (Questa l'ha scritta chatgpt ma va bene così, almeno ti fai una risata)
     </p>
-    <button onclick="nextPage(3)">Guarda la nostra mappa 🌍</button>
+    <button onclick="nextPage(4)">Guarda la nostra mappa 🌍</button>
 </div>
 
 <!-- PAGINA 3 -->
-<div class="section" id="page3">
+<div class="section" id="page4">
     <h1>I Nostri Viaggi 🌎</h1>
     <p>
-        Ogni luogo colorato racconta un pezzo della nostra storia.
-        Ogni viaggio è stato un passo in più verso qualcosa di ancora più grande.
+        Voglio vedere tutti i posti belli con te e mi piace molto l'idea di una mappa da colorare.
+
+        Non prenderla come definitiva, è la prima che ho trovato, ma troverò qualcosa di meglio
         <br><br>
         Questa è la nostra mappa.
     </p>
 
-    <a href="https://tripmemo.app/visited-countries-map?countries=DE,ES,GB,IT,SI" target="_blank">
-        <button>Apri la nostra mappa ❤️</button>
-    </a>
+    <img src="mappa.jpeg" alt="Noi due" class="romantic-img">
+
+
+     <button onclick="nextPage(5)">C'è ancora una pagina, clicca qui!</button>
+</div>
+
+
+<!-- PAGINA 34-->
+<div class="section" id="page5">
+    <h1>Dormi sempre ahaha 🌎</h1>
+    <p>
+
+        <video class="romantic-video" autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+        Il tuo browser non supporta il video.
+        </video>        
+    </p>
+<button onclick="nextPage(6)">Dai c'è l'ultima pagina, schiaccia</button>
+   
+</div>
+
+<div class="section" id="page6">
+    <h1>TI AMO</h1>
+    <p>
+
+          <img src="FOTO.jpeg" alt="Noi due" class="romantic-img">
+     
+    </p>
+
+    Fine
+    <br><br>
+    Ma non del nostro amore, quello continuerà per tanto
+    <br><br>
+    Perchè abbiamo ancora tanto da costruire
+
+   
 </div>
 
 
