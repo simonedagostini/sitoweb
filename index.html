@@ -1,223 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Overconfidence & Beer Game</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-    .hidden { display: none; }
-    .section { background: white; padding: 20px; border-radius: 10px; max-width: 800px; margin: 20px auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    h2 { color: #2c3e50; }
-    label, p { margin: 10px 0 5px; }
-    input, select, button { margin: 5px 0 15px; padding: 8px; width: 100%; max-width: 400px; }
-    button { background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background-color: #2980b9; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Per Eleonora ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: white;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.section {
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.active {
+    display: flex;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+p {
+    max-width: 700px;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: white;
+    color: #ff4e50;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s infinite ease-in;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-800px); opacity: 0; }
+}
+
+iframe {
+    width: 90%;
+    height: 70%;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+</style>
 </head>
+
 <body>
-  <div class="section" id="nicknameSection">
-    <h2>Enter your nickname</h2>
-    <input type="text" id="nickname" placeholder="Nickname">
-    <button onclick="startOverestimation()">Start</button>
-    <p>If you're the admin, type <b>admin123</b> as nickname to access the Admin Panel.</p>
-  </div>
 
-  <div class="section hidden" id="adminSection">
-    <h2>Admin Panel</h2>
-    <button onclick="downloadResults()">Download CSV</button>
-    <table>
-      <thead><tr><th>Nickname</th><th>Estimated Score</th><th>Quiz Score</th><th>Overconfidence %</th><th>Total Cost</th></tr></thead>
-      <tbody id="adminTable"></tbody>
-    </table>
-  </div>
+<!-- PAGINA 1 -->
+<div class="section active" id="page1">
+    <h1>Buon San Valentino Eleonora ❤️</h1>
+    <p>
+        Questa piccola sorpresa è per te.  
+        Per ricordarci dove siamo stati…  
+        e sognare insieme dove andremo.
+    </p>
+    <button onclick="nextPage(2)">Scopri di più ✨</button>
+</div>
 
-  <div class="section hidden" id="overestimationSection">
-    <h2>Overestimation Calculation</h2>
-    <label>1. How many answers do you think you got right out of 5?</label>
-    <input type="number" id="estimatedScore" min="0" max="5">
+<!-- PAGINA 2 -->
+<div class="section" id="page2">
+    <h1>Per Noi 💕</h1>
+    <p>
+        Con te ogni posto diventa casa.  
+        Ogni viaggio diventa un ricordo.  
+        Ogni momento diventa qualcosa che vorrei rivivere mille volte.
+        <br><br>
+        Sei la mia compagna di avventure,  
+        il mio sorriso preferito,  
+        il mio futuro.
+        <br><br>
+        E questa è solo la mappa dell’inizio.
+    </p>
+    <button onclick="nextPage(3)">Guarda la nostra mappa 🌍</button>
+</div>
 
-    <p>2. What is the capital of Australia?</p>
-    <select id="q1">
-      <option>Sydney</option><option>Canberra</option><option>Melbourne</option><option>Brisbane</option>
-    </select>
-    <p>3. What is 12 × 8?</p>
-    <select id="q2">
-      <option>80</option><option>96</option><option>108</option><option>92</option>
-    </select>
-    <p>4. In what year was Google founded?</p>
-    <select id="q3">
-      <option>1996</option><option>1998</option><option>2000</option><option>2001</option>
-    </select>
-    <p>5. Which metal conducts electricity best?</p>
-    <select id="q4">
-      <option>Gold</option><option>Copper</option><option>Silver</option><option>Aluminum</option>
-    </select>
-    <p>6. Where is Mount Kilimanjaro located?</p>
-    <select id="q5">
-      <option>Kenya</option><option>Tanzania</option><option>Ethiopia</option><option>Uganda</option>
-    </select>
+<!-- PAGINA 3 -->
+<div class="section" id="page3">
+    <h1>I Nostri Viaggi 🌎</h1>
+    <!-- INCOLLA QUI IL LINK EMBED DI TRIPMEMO -->
+    <iframe
+  src="https://tripmemo.app/visited-countries-map/embed?c=DE,ES,GB,IT,SI"
+  width="600"
+  height="350"
+  frameborder="0"
+  style="border-radius: 12px; border: 1px solid #e5e5e5;"
+  title="My Visited Countries Map"
+></iframe>
+<p style="font-size: 12px; color: #666; margin-top: 8px;">
+  Created with <a href="https://tripmemo.app/visited-countries-map" target="_blank" rel="noopener">TripMemo</a>
+</p>
 
-    <button onclick="startOverplacement()">Next</button>
-  </div>
+</div>
 
-  <div class="section hidden" id="overplacementSection">
-    <h2>Overplacement</h2>
-    <label>Where do you think you rank compared to others in the quiz?</label>
-    <select id="placement">
-      <option>Top 10%</option><option>Top 25%</option><option>Average</option><option>Bottom 25%</option><option>Bottom 10%</option>
-    </select>
-    <button onclick="startOverprecision()">Next</button>
-  </div>
+<script>
+function nextPage(pageNumber) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.getElementById('page' + pageNumber).classList.add('active');
+}
 
-  <div class="section hidden" id="overprecisionSection">
-    <h2>Overprecision</h2>
-    <p>With 90% confidence, estimate the following ranges:</p>
-    <label>1. Population of France (in millions):</label>
-    <input type="number" id="franceMin"> to <input type="number" id="franceMax">
-    <label>2. Year the telephone was invented:</label>
-    <input type="number" id="phoneMin"> to <input type="number" id="phoneMax">
-    <label>3. Distance from Rome to Berlin (km):</label>
-    <input type="number" id="romeMin"> to <input type="number" id="romeMax">
-    <label>4. Average liters of blood in a human body:</label>
-    <input type="number" id="bloodMin"> to <input type="number" id="bloodMax">
-    <label>5. Number of weeks in a year:</label>
-    <input type="number" id="weeksMin"> to <input type="number" id="weeksMax">
-    <button onclick="startGame()">Start Beer Game</button>
-  </div>
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top = window.innerHeight + "px";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
 
-  <div class="section hidden" id="gameSection">
-    <h2>Beer Game – Distributor Role</h2>
-    <p>Week: <span id="week">1</span> / 36</p>
-    <p>Customer demand: <span id="demand">4</span></p>
-    <p>Inventory: <span id="inventory">12</span></p>
-    <p>Backlog: <span id="backlog">0</span></p>
-    <p>Last delivery: <span id="delivery">0</span></p>
-    <label>Order to factory:</label>
-    <input type="number" id="orderInput" min="0" value="4">
-    <button onclick="nextWeek()">Submit Order</button>
-  </div>
+setInterval(createHeart, 500);
+</script>
 
-  <div class="section hidden" id="finalResults">
-    <h2>Final Results</h2>
-    <p id="costOutput"></p>
-    <p id="overconfidenceOutput"></p>
-    <table>
-      <thead><tr><th>Nickname</th><th>Estimated Score</th><th>Quiz Score</th><th>Overconfidence %</th><th>Total Cost</th></tr></thead>
-      <tbody id="resultsTable"></tbody>
-    </table>
-  </div>
-
-  <script>
-    let nickname = "", week = 1, inventory = 12, backlog = 0, deliveryQueue = [0, 0], orders = [], costs = [], totalCost = 0;
-    let participants = [], quizScore = 0;
-
-    function startOverestimation() {
-      nickname = document.getElementById('nickname').value.trim();
-      if (!nickname) return alert("Please enter a nickname");
-      if (nickname === "admin123") {
-        document.getElementById('nicknameSection').classList.add('hidden');
-        document.getElementById('adminSection').classList.remove('hidden');
-        updateAdminTable();
-        return;
-      }
-      document.getElementById('nicknameSection').classList.add('hidden');
-      document.getElementById('overestimationSection').classList.remove('hidden');
-    }
-
-    function startOverplacement() {
-      document.getElementById('overestimationSection').classList.add('hidden');
-      document.getElementById('overplacementSection').classList.remove('hidden');
-    }
-
-    function startOverprecision() {
-      document.getElementById('overplacementSection').classList.add('hidden');
-      document.getElementById('overprecisionSection').classList.remove('hidden');
-    }
-
-    function startGame() {
-      document.getElementById('overprecisionSection').classList.add('hidden');
-      document.getElementById('gameSection').classList.remove('hidden');
-    }
-
-    function nextWeek() {
-      const demand = week <= 4 ? 4 : 8;
-      const order = parseInt(document.getElementById("orderInput").value);
-      const delivery = deliveryQueue.shift();
-      inventory += delivery;
-      let shipped = Math.min(inventory, demand + backlog);
-      backlog = Math.max(0, demand + backlog - inventory);
-      inventory -= shipped;
-      deliveryQueue.push(order);
-      const cost = 0.5 * inventory + backlog;
-      costs.push(cost);
-      totalCost += cost;
-
-      document.getElementById("week").textContent = week + 1;
-      document.getElementById("demand").textContent = week < 4 ? 4 : 8;
-      document.getElementById("inventory").textContent = inventory;
-      document.getElementById("backlog").textContent = backlog;
-      document.getElementById("delivery").textContent = delivery;
-
-      if (++week > 36) {
-        document.getElementById("gameSection").classList.add("hidden");
-        document.getElementById("finalResults").classList.remove("hidden");
-
-        const estimated = parseInt(document.getElementById("estimatedScore").value);
-        const answers = ["Canberra", "96", "1998", "Silver", "Tanzania"];
-        const userAnswers = ["q1","q2","q3","q4","q5"].map(id => document.getElementById(id).value);
-        quizScore = userAnswers.filter((ans, i) => ans === answers[i]).length;
-        const overconfidence = ((estimated - quizScore) / 5 * 100).toFixed(1);
-
-        const data = {nickname, estimated, quizScore, overconfidence, totalCost};
-
-// Salvataggio su Google Sheets
-fetch("https://script.google.com/macros/s/AKfycbwrT4PkvCBCXv9oo2kdf_C6HRMdY4z11DnSJwKdTMPzelUssyVlYlkQV-ggYRX1HbMa/exec", {
-  method: "POST",
-  mode: "no-cors",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-});
-
-participants.push(data);
-
-        document.getElementById("costOutput").textContent = `Total cost incurred: €${totalCost.toFixed(2)}`;
-        document.getElementById("overconfidenceOutput").textContent = `Your overconfidence score: ${overconfidence}%`;
-
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${nickname}</td><td>${estimated}</td><td>${quizScore}</td><td>${overconfidence}%</td><td>€${totalCost.toFixed(2)}</td>`;
-        document.getElementById("resultsTable").appendChild(row);
-
-        updateAdminTable();
-      }
-    }
-
-    function updateAdminTable() {
-      const tbody = document.getElementById("adminTable");
-      if (!tbody) return;
-      tbody.innerHTML = "";
-      participants.forEach(p => {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${p.nickname}</td><td>${p.estimated}</td><td>${p.quizScore}</td><td>${p.overconfidence}%</td><td>€${p.totalCost.toFixed(2)}</td>`;
-        tbody.appendChild(row);
-      });
-    }
-
-    function downloadResults() {
-      let csv = "Nickname,Estimated Score,Quiz Score,Overconfidence %,Total Cost\n";
-      participants.forEach(p => {
-        csv += `${p.nickname},${p.estimated},${p.quizScore},${p.overconfidence},${p.totalCost.toFixed(2)}\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = "beer_game_results.csv";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  </script>
 </body>
 </html>
